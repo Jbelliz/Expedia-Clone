@@ -103,25 +103,6 @@
   ],
   "hotelcart": [
     {
-      "image": "https://r2imghtlak.mmtcdn.com/r2-mmt-htl-image/htl-imgs/201802241526105449-76b20e2613c311e88dbe0a9df65c8753.jpg?&output-quality=75&downsize=583:388&output-format=jpg",
-      "img1": "https://r2imghtlak.mmtcdn.com/r2-mmt-htl-image/htl-imgs/201802241526105449-76b20e2613c311e88dbe0a9df65c8753.jpg?&output-quality=75&downsize=583:388&output-format=jpg",
-      "img2": "https://r2imghtlak.mmtcdn.com/r2-mmt-htl-image/htl-imgs/201802241526105449-61fa810213c311e8867a0a9df65c8753.jpg?&output-quality=75&downsize=583:388&crop=583:388;86,0&output-format=jpg",
-      "img3": "https://r2imghtlak.mmtcdn.com/r2-mmt-htl-image/htl-imgs/201802241526105449-4618b92c13c311e8afa70a9df65c8753.jpg?&output-quality=75&downsize=583:388&output-format=jpg",
-      "img4": "https://r2imghtlak.mmtcdn.com/r2-mmt-htl-image/htl-imgs/201802241526105449-915d473613c311e8bb7702755708f0b3.jpg?&output-quality=75&downsize=583:388&output-format=jpg",
-      "rating": 3.8,
-      "ratingtext": "Very Good",
-      "ratingcomment": "Based on  Ratings and  reviews",
-      "name": "Octave Studio Hotel",
-      "place": "Koramangala",
-      "description": "Couple Friendly",
-      "additional": "Free Cancellation",
-      "taxes": 291,
-      "price": 2999,
-      "additional2": "",
-      "additional1": "",
-      "id": 1
-    },
-    {
       "image": "https://r2imghtlak.mmtcdn.com/r2-mmt-htl-image/htl-imgs/202203251031111024-2185f03afe8211ecab0a0a58a9feac02.jpg?&output-quality=75&downsize=583:388&crop=583:388;4,0&output-format=jpg",
       "img1": "https://r2imghtlak.mmtcdn.com/r2-mmt-htl-image/htl-imgs/202203251031111024-2185f03afe8211ecab0a0a58a9feac02.jpg?&output-quality=75&downsize=583:388&crop=583:388;4,0&output-format=jpg",
       "img2": "https://r2imghtlak.mmtcdn.com/r2-mmt-htl-image/htl-imgs/202203251031111024-0989f55cc23d11ec88930a58a9feac02.jpg?&output-quality=75&downsize=583:388&crop=583:388;24,0&output-format=jpg",
@@ -139,6 +120,26 @@
       "additional2": "",
       "additional1": "",
       "id": 2
+    },
+    {
+      "image": "https://r1imghtlak.mmtcdn.com/40948310258a11eb8e060242ac110003.jpg?&output-quality=75&downsize=583:388&crop=583:388;0,24&output-format=webp",
+      "img1": "https://r1imghtlak.mmtcdn.com/40948310258a11eb8e060242ac110003.jpg?&output-quality=75&downsize=583:388&crop=583:388;0,24&output-format=webp",
+      "img2": "https://r1imghtlak.mmtcdn.com/9facf83e3de811ebbfbf0242ac110005.jpg?&output-quality=75&downsize=583:388&crop=583:388;0,24&output-format=webp",
+      "img3": "https://r1imghtlak.mmtcdn.com/98b33bfa3dc611eba73d0242ac110005.jpg?&output-quality=75&downsize=583:388&crop=583:388;0,84&output-format=webp",
+      "img4": "https://r1imghtlak.mmtcdn.com/000d2b9a468311e9b8ad0242ac110002.jfif?&output-quality=75&downsize=583:388&crop=583:388;86,0&output-format=webp",
+      "rating": 4.4,
+      "ratingtext": "Excellent",
+      "ratingcomment": "Based on  Ratings and  reviews",
+      "name": "Hotel Royal Anthurium",
+      "place": "Benaulim",
+      "description": "Couple Friendly",
+      "taxes": 825,
+      "pernight": "Per Night",
+      "additional": "| 1.7 km from Benaulim Beach",
+      "additional1": "",
+      "price": 5000,
+      "sourceId": 261,
+      "id": 3
     }
   ],
   "flightcart": [
@@ -196,6 +197,51 @@
       "price": "7999",
       "totalTime": "02h 55m",
       "id": 7
+    },
+    {
+      "airline": "Vistara",
+      "number": "6E 2054",
+      "from": "DELHI",
+      "to": "MUMBAI",
+      "departure": "04:20",
+      "arrival": "07:15",
+      "price": "6999",
+      "totalTime": "02h 55m",
+      "sourceId": 1,
+      "id": 8
+    }
+  ],
+  "bookings": [
+    {
+      "type": "hotel",
+      "traveler": {
+        "firstName": "dfsasdfsd",
+        "lastName": "sdfdsfs",
+        "mobile": "3423432432"
+      },
+      "item": {
+        "image": "https://r2imghtlak.mmtcdn.com/r2-mmt-htl-image/htl-imgs/201802241526105449-76b20e2613c311e88dbe0a9df65c8753.jpg?&output-quality=75&downsize=583:388&output-format=jpg",
+        "img1": "https://r2imghtlak.mmtcdn.com/r2-mmt-htl-image/htl-imgs/201802241526105449-76b20e2613c311e88dbe0a9df65c8753.jpg?&output-quality=75&downsize=583:388&output-format=jpg",
+        "img2": "https://r2imghtlak.mmtcdn.com/r2-mmt-htl-image/htl-imgs/201802241526105449-61fa810213c311e8867a0a9df65c8753.jpg?&output-quality=75&downsize=583:388&crop=583:388;86,0&output-format=jpg",
+        "img3": "https://r2imghtlak.mmtcdn.com/r2-mmt-htl-image/htl-imgs/201802241526105449-4618b92c13c311e8afa70a9df65c8753.jpg?&output-quality=75&downsize=583:388&output-format=jpg",
+        "img4": "https://r2imghtlak.mmtcdn.com/r2-mmt-htl-image/htl-imgs/201802241526105449-915d473613c311e8bb7702755708f0b3.jpg?&output-quality=75&downsize=583:388&output-format=jpg",
+        "rating": 3.8,
+        "ratingtext": "Very Good",
+        "ratingcomment": "Based on  Ratings and  reviews",
+        "name": "Octave Studio Hotel",
+        "place": "Koramangala",
+        "description": "Couple Friendly",
+        "additional": "Free Cancellation",
+        "taxes": 291,
+        "price": 2999,
+        "additional2": "",
+        "additional1": "",
+        "id": 1
+      },
+      "total": 2999,
+      "status": "confirmed",
+      "createdAt": "2026-09-08T01:28:04.188Z",
+      "id": 1
     }
   ],
   "flight": [

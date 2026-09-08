@@ -3,8 +3,18 @@ import Stay from '../../Pages/Stay/Stay';
 import React from 'react'
 import { InputBox } from '../../Pages/ThingsTodo/InputBox'
 import Flights from '../../Pages/Flights/Flight'
+import { useNavigate } from "react-router-dom";
 
 const MainInputBox = () => {
+    const navigate = useNavigate();
+
+const handleFlightSearch = (criteria) => {
+  navigate("/flight", {
+    state: {
+      searchCriteria: criteria,
+    },
+  });
+};
   return (
     <Box width={'85%'}   m={'auto'} mt={10} border='1px solid #BDBDBD' borderRadius='7px' >
             <Tabs position="relative" variant="unstyled"  >
@@ -28,7 +38,7 @@ const MainInputBox = () => {
                     <Stay/>
                     </TabPanel>
                     <TabPanel>
-                        <Flights/>
+                        <Flights onSearch={handleFlightSearch} />
                     </TabPanel>
                     <TabPanel>
                         <p>Cars</p>

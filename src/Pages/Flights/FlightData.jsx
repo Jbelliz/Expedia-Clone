@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import Flights from "./Flight";
 import SideBar from "./SideBar";
+import { useLocation } from "react-router-dom";
 
 const FlightData = () => {
-  const [searchCriteria, setSearchCriteria] = useState({
-    from: "",
-    to: "",
-  });
+  const location = useLocation();
+
+  const [searchCriteria, setSearchCriteria] = useState(
+    location.state?.searchCriteria || {
+      from: "",
+      to: "",
+    }
+  );
 
   return (
     <div>
