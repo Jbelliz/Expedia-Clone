@@ -69,10 +69,17 @@ export const fetch_users = (dispatch) => {
 
 // Logint funcnality
 
+// export const login_user = (loginData) => (dispatch) => {
+//   dispatch(login_success(loginData));
+//   // localStorage.setItem("MkuserData", JSON.stringify(loginData));
+//   // localStorage.setItem("MkisAuth", JSON.stringify(true));
+// };
+
 export const login_user = (loginData) => (dispatch) => {
+  localStorage.setItem("MkuserData", JSON.stringify(loginData));
+  localStorage.setItem("MkisAuth", JSON.stringify(true));
+
   dispatch(login_success(loginData));
-  // localStorage.setItem("MkuserData", JSON.stringify(loginData));
-  // localStorage.setItem("MkisAuth", JSON.stringify(true));
 };
 
 export const logout_user = (dispatch) => {
