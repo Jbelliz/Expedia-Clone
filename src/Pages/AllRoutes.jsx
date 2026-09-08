@@ -1,6 +1,6 @@
 import { Admin } from "./Admin/AdminFlight";
 import { AdminStay } from "./Admin/AdminStay";
-import React from 'react'
+import React from "react";
 import { Route, Routes } from "react-router-dom";
 // import { HomePage } from "./HomePage";
 import { AdminDashboard } from "./Admin/AdminDashboard";
@@ -14,28 +14,32 @@ import StayData from "./Stay/StayData";
 import CheckoutPage from "./CheckoutPage";
 import FlightData from "./Flights/FlightData";
 import CartPage from "./CartPage";
+import { AdminUsers } from "./Admin/AdminUsers";
+import { AdminBookings } from "./Admin/AdminBookings";
 
 export const AllRoutes = () => {
-    return (
-        <>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="/admin/adminflight" element={<Admin />} />
-            <Route path="/admin/adminstay" element={<AdminStay />} />
-            <Route path="/admin/products" element={<AdminProducts />} />
-            <Route path="/login" element={<Login/>}/>
-            <Route path="/register" element={<Register/>}/>
-            <Route path="/admin/hotels" element={<AllHotels />} />
-            <Route path="/ThingsToDo" element={<Destination/>}/>
-            <Route path="/stay" element={<StayData />} />
-            <Route path="/flight" element={<FlightData />} />
-            <Route path="/cart" element={<CartPage />} />
-            
-            <Route path="/checkout" element={<CheckoutPage/>} ></Route>
-          </Routes>
-        </>
-      );
-}
+  return (
+    <>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin/adminflight" element={<Admin />} />
+        <Route path="/admin/adminstay" element={<AdminStay />} />
+        <Route path="/admin/products" element={<AdminProducts />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/admin/hotels" element={<AllHotels />} />
+        <Route path="/ThingsToDo" element={<Destination />} />
+        <Route path="/stay" element={<StayData />} />
+        <Route path="/flight" element={<FlightData />} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/admin/users" element={<AdminUsers />} />
+        <Route path="/admin/bookings" element={<AdminBookings />} />
+
+        <Route path="/checkout" element={<CheckoutPage />}></Route>
+      </Routes>
+    </>
+  );
+};
 
 // add

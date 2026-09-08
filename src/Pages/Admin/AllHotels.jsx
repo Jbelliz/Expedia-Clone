@@ -22,7 +22,7 @@ export const AllHotels = () => {
   const handleDeleteHotel = (deleteId) => {
     dispatch(DeleteHotel(deleteId));
     // alert(deleteId);
-    toast.success("Flight Removed", {
+    toast.success("Hotel Removed", {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,

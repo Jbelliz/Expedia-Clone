@@ -1,124 +1,144 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-// import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchFlightProducts } from "../../Redux/AdminFlights/action";
+import API_URL from "../../api";
 import "./AdminDashboard.Module.css";
 
-
 export const AdminDashboard = () => {
-  const dispatch = useDispatch();
-  const [flight, setFlight] = useState(0);
-  const [hotel, setHotel] = useState(0);
-  const [users, setUsers] = useState(0);
-  const [giftCard, setGiftCard] = useState(0);
-  const [things, setThings] = useState(0);
- const [loading, setLoading] = useState(false);
+  const [stats, setStats] = useState({
+    flights: 0,
+    hotels: 0,
+    users: 0,
+    bookings: 0,
+    cartItems: 0,
+  });
 
-  const getHotel = () => {
-    setLoading(true);
-    axios
-      .get("http://localhost:8080/flight")
-      .then((res) => {
-        setFlight(res.data.length);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    //
-    axios
-      .get("http://localhost:8080/hotel")
-      .then((res) => {
-        setHotel(res.data.length);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    //
-    axios
-      .get("http://localhost:8080/users")
-      .then((res) => {
-        setUsers(res.data.length);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-      axios
-      .get("http://localhost:8080/giftcards")
-      .then((res) => {
-        setGiftCard(res.data.length);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    
-      axios
-      .get("http://localhost:8080/Things_todo")
-      .then((res) => {
-        setThings(res.data.length);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    
-    
-  };
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getHotel();
+    const getCount = async (endpoint) => {
+      try {
+        const response = await axios.get(`${API_URL}/${endpoint}`);
+        return response.data.length;
+      } catch (error) {
+        console.error(`Unable to load ${endpoint}:`, error);
+        return 0;
+      }
+    };
+
+    const loadDashboard = async () => {
+      setLoading(true);
+
+      const [
+        flights,
+        hotels,
+        users,
+        bookings,
+        hotelCart,
+        flightCart,
+      ] = await Promise.all([
+        getCount("flight"),
+        getCount("hotel"),
+        getCount("users"),
+        getCount("bookings"),
+        getCount("hotelcart"),
+        getCount("flightcart"),
+      ]);
+
+      setStats({
+        flights,
+        hotels,
+        users,
+        bookings,
+        cartItems: hotelCart + flightCart,
+      });
+
+      setLoading(false);
+    };
+
+    loadDashboard();
   }, []);
 
   return (
-    <>
-      <div className="mainAdminLandingpage">
-        <div className="adminSideBr">
-          <h1><Link to={"/admin"}>Home</Link></h1>
-          <h1><Link to={"/admin/adminflight"}>Add Flight</Link></h1>
-          <h1><Link to={"/admin/adminstay"}>Add Stays</Link></h1>
-          <h1><Link to={"/admin/products"}>All Flights</Link></h1>
-          <h1><Link to={"/admin/hotels"}>All Hotels</Link></h1>
-          <h1><Link to={"/"}>Log out</Link></h1>
+    <div className="mainAdminLandingpage">
+      <div className="adminSideBr">
+        <h1>
+          <Link to="/admin">Home</Link>
+        </h1>
+
+        <h1>
+          <Link to="/admin/adminflight">Add Flight</Link>
+        </h1>
+
+        <h1>
+          <Link to="/admin/adminstay">Add Stay</Link>
+        </h1>
+
+        <h1>
+          <Link to="/admin/products">All Flights</Link>
+        </h1>
+
+        <h1>
+          <Link to="/admin/hotels">All Hotels</Link>
+        </h1>
+
+        <h1>
+          <Link to="/admin/bookings">Bookings</Link>
+        </h1>
+
+        <h1>
+          <Link to="/admin/users">Users</Link>
+        </h1>
+
+        <h1>
+          <Link to="/">Exit Admin</Link>
+        </h1>
+      </div>
+
+      <div className="mainBox">
+        <div className="mainBoxHead">
+          <h1>Admin Dashboard</h1>
+          <hr />
         </div>
-        <div className="mainBox">
-          <div className="mainBoxHead">
-            <h1>Admin Dashboard</h1>
-            <hr />
-            <hr />
-            <hr />
-          </div>
+
+        {loading ? (
+          <h2>Loading dashboard...</h2>
+        ) : (
           <div className="DataBoxes">
-            {/*  */}
+
             <div className="dataBx">
-              <h1>Total Hotel</h1>
-              {<h1>{hotel}</h1>}
+              <h1>Total Hotels</h1>
+              <h1>{stats.hotels}</h1>
               <Link to="/admin/hotels">View</Link>
             </div>
+
             <div className="dataBx">
               <h1>Total Flights</h1>
-              {<h1>{flight}</h1>}
-              <Link to="/admin/flights">View</Link>
+              <h1>{stats.flights}</h1>
+              <Link to="/admin/products">View</Link>
             </div>
+
             <div className="dataBx">
               <h1>Total Users</h1>
-              {<h1>{users}</h1>}
-              <Link to="/admin">View</Link>
+              <h1>{stats.users}</h1>
+              <Link to="/admin/users">View</Link>
             </div>
+
             <div className="dataBx">
-              <h1>Giftcards</h1>
-              {<h1>{giftCard}</h1>}
-              <Link to="/admin/giftcards">View</Link>
+              <h1>Total Bookings</h1>
+              <h1>{stats.bookings}</h1>
+              <Link to="/admin/bookings">View</Link>
             </div>
+
             <div className="dataBx">
-              <h1>Pakages Available</h1>
-              {<h1>{things}</h1>}
-              <Link to="/setThings">View</Link>
+              <h1>Cart Items</h1>
+              <h1>{stats.cartItems}</h1>
+              <Link to="/cart">View Cart</Link>
             </div>
-            {/*  */}
+
           </div>
-        </div>
+        )}
       </div>
-    </>
+    </div>
   );
 };
