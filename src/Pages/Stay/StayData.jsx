@@ -1,3 +1,6 @@
+import axios from "axios";
+import API_URL from "../../api";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DeleteHotel, fetchingHotels } from "../../Redux/StayReducer/action";
@@ -7,12 +10,28 @@ import Sidebar from "./Sidebar";
 import Pagination from "./Pagination";
 
 const StayData = () => {
+  const navigate = useNavigate();
+
+  const handleAddToCart = async (hotel) => {
+    try {
+      const { id, ...hotelData } = hotel;
+
+      await axios.post(`${API_URL}/hotelcart`, {
+        ...hotelData,
+        sourceId: id,
+      });
+
+      navigate("/cart");
+    } catch (error) {
+      console.error("Hotel cart error:", error);
+    }
+  };
   const dispatch = useDispatch();
   const { data } = useSelector((store) => store.StayReducer);
   const checkInDate = useSelector((state) => state.StayReducer.checkInDate);
   const checkOutDate = useSelector((state) => state.StayReducer.checkOutDate);
   const selectedCity = useSelector((state) => state.StayReducer.selectedCity);
-  console.log("city",selectedCity);
+  console.log("city", selectedCity);
   console.log("In", checkInDate);
   console.log("out", checkOutDate);
   const [selectedPriceRange, setSelectedPriceRange] = useState([0, 50000]);
@@ -21,8 +40,7 @@ const StayData = () => {
 
   //Pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const totalNumOfPages = Math.ceil(244 / 20); 
-
+  const totalNumOfPages = Math.ceil(244 / 20);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -51,31 +69,43 @@ const StayData = () => {
   useEffect(() => {
     if (data) {
       const filtered = data.filter((hotel) => {
-       const hotelPrice = Number(hotel.price) || 0;
+        const hotelPrice = Number(hotel.price) || 0;
 
         const matchesPrice =
           hotelPrice >= selectedPriceRange[0] &&
-         hotelPrice <= selectedPriceRange[1];
+          hotelPrice <= selectedPriceRange[1];
 
-       const matchesCity =
+        const matchesCity =
           !selectedCity ||
-         hotel.place?.toLowerCase() === selectedCity.toLowerCase();
+          hotel.place?.toLowerCase() === selectedCity.toLowerCase();
+        const handleAddToCart = async (hotel) => {
+          try {
+            const { id, ...hotelData } = hotel;
 
-       return matchesPrice && matchesCity;
+            await axios.post(`${API_URL}/hotelcart`, {
+              ...hotelData,
+              sourceId: id,
+            });
+
+            navigate("/cart");
+          } catch (error) {
+            console.error("Hotel cart error:", error);
+          }
+        };
+        return matchesPrice && matchesCity;
       });
 
-    setFilteredHotel(filtered);
+      setFilteredHotel(filtered);
     }
   }, [data, selectedPriceRange, selectedCity]);
 
-console.log(data)
+  console.log(data);
   return (
     <div className="stay-data">
-      
       <div className="sidebar-container">
         <Sidebar
-        selectedPriceRange={selectedPriceRange}
-        setSelectedPriceRange={setSelectedPriceRange}
+          selectedPriceRange={selectedPriceRange}
+          setSelectedPriceRange={setSelectedPriceRange}
         />
       </div>
 
@@ -104,16 +134,29 @@ console.log(data)
                 <span>Rating:</span>
                 <p>{hotel.rating ? hotel.rating : 1}</p>
               </div>
+              <button
+                onClick={() => handleAddToCart(hotel)}
+                style={{
+                  padding: "8px 14px",
+                  backgroundColor: "teal",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "5px",
+                  cursor: "pointer",
+                }}
+              >
+                Book Now
+              </button>
             </div>
           </div>
         </div>
       ))}
       <div>
-      <Pagination
-        current={currentPage}
-        onChange={handlePageChange}
-        total={totalNumOfPages}
-      />
+        <Pagination
+          current={currentPage}
+          onChange={handlePageChange}
+          total={totalNumOfPages}
+        />
       </div>
     </div>
   );

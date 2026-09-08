@@ -14,14 +14,13 @@ import FlightList from "./FlightList";
 const SideBar = ({ searchCriteria }) => {
   const [priceValue, setPriceValue] = useState("all");
   const [totalPages, setTotalPages] = useState(1);
-
-    useEffect(() => {
-      setPage(1);
-    }, [priceValue, searchCriteria]);
-  const [classes, setClasses] = useState("");
   const [page, setPage] = useState(1);
+  const [classes, setClasses] = useState("");
   const [Packaging, setpackaging] = useState("");
 
+  useEffect(() => {
+    setPage(1);
+  }, [priceValue, searchCriteria]);
   const pageBtn={
     marginTop: "3%",
     // width:"164px",

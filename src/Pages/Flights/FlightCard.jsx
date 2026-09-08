@@ -1,27 +1,43 @@
 import { Box, Image, Flex, Button } from "@chakra-ui/react";
 import axios from "axios";
 import { useToast } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import API_URL from "../../api";
+import { useNavigate } from "react-router-dom";
 
 export default function FlightCard({ data }) {
+  const navigate = useNavigate();
   const { id, airline, from, to, departure, arrival, price, totalTime } = data;
   const toast = useToast();
 
-  const handleClick = () => {
-    axios.post(`http://localhost:8000/flightcart`, data);
-    //   .then((res) => console.log(res))
-    //   .catch((err) => console.log(err))
+  const handleClick = async () => {
+    try {
+      const { id, ...flightData } = data;
 
-    toast({
-      title: "Flight Add to Cart",
-      description: "Please Proceed to Payment",
-      status: "success",
-      duration: 9000,
-      isClosable: true,
-    });
+      await axios.post(`${API_URL}/flightcart`, {
+        ...flightData,
+        sourceId: id,
+      });
+
+      toast({
+        title: "Flight added to cart",
+        description: "You can now review your trip.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+
+      navigate("/cart");
+    } catch (error) {
+      console.error("Flight cart error:", error);
+
+      toast({
+        title: "Unable to add flight",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
   };
-
-  
 
   const Booknow = {
     marginTop: "3%",
@@ -77,11 +93,9 @@ export default function FlightCard({ data }) {
         <h3>Price</h3>
         <b>{price}</b>
       </Flex>
-      <Link to={"/checkout"}>
-        <Button style={Booknow} onClick={handleClick}>
-          Book Now
-        </Button>
-      </Link>
+      <Button style={Booknow} onClick={handleClick}>
+        Book Now
+      </Button>
     </Box>
   );
 }

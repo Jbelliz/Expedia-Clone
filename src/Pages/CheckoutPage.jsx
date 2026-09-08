@@ -1,151 +1,246 @@
-import React from 'react'
-import { Box, Button, HStack, Heading, Icon, Image, Input, SimpleGrid, Text } from '@chakra-ui/react'
-
-
-import {TbBed} from 'react-icons/tb'
-import {BsCheck} from 'react-icons/bs'
-import {IoIosMan} from 'react-icons/io'
-import {AiOutlineWifi} from 'react-icons/ai'
+import React, { useState } from "react";
+import axios from "axios";
+import {
+  Box,
+  Button,
+  Heading,
+  Input,
+  Text,
+  useToast,
+} from "@chakra-ui/react";
+import API_URL from "../api";
 
 const CheckoutPage = () => {
-  return (
+  const toast = useToast();
 
-      <Box bg={'gray.300'} width={'100%'} height={'1000px'} >
+  const [item] = useState(() => {
+    const savedItem = localStorage.getItem("checkoutItem");
 
-        <Box width={'85%'} margin={'auto'} >
-          <Heading fontSize={'26px'} fontWeight={'bold'} textAlign={'left'} >Review and Book</Heading>
+    return savedItem ? JSON.parse(savedItem) : null;
+  });
 
-          <Box bg={'white'} mt={2} p={3} >
-            <HStack>
-              <Box>
-                <Image src='https://i.postimg.cc/mZmMdvzw/Screenshot-2023-04-01-130744.png' alt='image' />
-              </Box>
-              <Box>
-                <Text textAlign={'left'} fontWeight={'bold'} >
-                  Fully refundable before Sat, 8 Apr, 18:00 (property local time)
-                </Text>
-                <Text>
-                You can change or cancel this stay if plans change. Because flexibility matters.
-                </Text>
-              </Box>
-            </HStack>
-          </Box>
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [mobile, setMobile] = useState("");
 
-          <SimpleGrid mt={2} gridTemplateColumns={'63% 35%'} gap={"1%"} >
-            <Box bg={'white'} p={3}  >
-              <Heading textAlign={'left'} fontSize={'20px'} fontWeight={'bold'}  >Whos Checking</Heading>
-              <Heading textAlign={'left'} mt={3} fontWeight={'semibold'} >Room 1 : 2 Adult 2 twin bed non smoking</Heading>
-              <Box  >
-                <Box textAlign={'left'} my={2} >
-                  <label  >
-                    First Name : <Input type='text' placeholder='First Name' border='1px solid gray' />
-                  </label>
-                </Box>
-                <Box textAlign={'left'} my={2} >
-                  <label>
-                    Surname Name : <Input  type='text' placeholder='Surname' border='1px solid gray' />
-                  </label>
-                </Box>
-                <Box textAlign={'left'} my={2} >
-                  <label>
-                    Mobile No : <Input type='text' placeholder='Mobile No' border='1px solid gray' />
-                  </label>
-                </Box>
-              </Box>
+  const [bookingComplete, setBookingComplete] =
+    useState(null);
 
+  const handleBooking = async () => {
+    if (!firstName || !lastName || !mobile) {
+      toast({
+        title: "Please complete all traveler information.",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+      });
 
-              <Box textAlign={'left'} display={'flex'} >
-                <Input type='checkbox'/><Heading ml={2} >Receive text alerts about this trip (free of charge).</Heading>
-              </Box>
+      return;
+    }
 
-            </Box>
+    try {
+      const bookingType = item.bookingType;
 
-            <Box bg={'white'} textAlign={'left'} p={2} >
-              <Image mb={1} width={'100%'} src='https://images.trvl-media.com/lodging/4000000/3450000/3447500/3447485/4c0514cb_l.jpg' />
-              <Heading fontSize={'13px'} >8.8/10 Excellent (820 reviews)</Heading>
-              <Heading fontSize={'13px'}>Guests rated this property 9/10 for cleanliness</Heading>
-              <Heading fontSize={'13px'}>1 Room: Room, 2 Twin Beds, Non Smoking, City View</Heading>
-            
-              <SimpleGrid gridTemplateColumns={'repeat(2,1fr)'} mt={3} mb={5} >
-                <Box><Icon as={TbBed} fontSize={'18px'} />  2 Twins Bed</Box>
-                <Box><Icon as={IoIosMan} fontSize={'18px'} />   Sleeps 3</Box>
-                <Box><Icon as={AiOutlineWifi} fontSize={'18px'} />  Free WiFi</Box>
-                <Box><Icon as={BsCheck} fontSize={'18px'} />  Free parking</Box>
-              </SimpleGrid>
-            </Box>
-          </SimpleGrid>
+      const booking = {
+        type: bookingType,
 
-          <SimpleGrid mt={2} gridTemplateColumns={'63% 35%'} gap={"1%"} >
-            <Box bg={'white'} p={3}  >
-              <Heading textAlign={'left'} fontSize={'20px'} fontWeight={'bold'}  >Payment Method</Heading>
-              <Heading textAlign={'left'} mt={3} fontWeight={'semibold'} >₹0.00 due now. Payment information is only needed to hold your reservation.</Heading>
-              
-              <Box display={'flex'} gap={'6px'} >
-                <Image height={'30px'} width={'30px'}  src='https://a.travel-assets.com/dms-svg/payments/cards-cc_american_express.svg' alt='image' />
-                <Image height={'30px'} width={'30px'}   src='https://a.travel-assets.com/dms-svg/payments/cards-cc_master_card.svg' alt='image' />
-                <Image height={'30px'} width={'30px'}  src='https://a.travel-assets.com/egds/marks/payment__visa.svg' alt='image' />
-                <Image  height={'30px'} width={'30px'} src='https://a.travel-assets.com/dms-svg/payments/cards-cc_visa_electron.svg' alt='image' />
-              </Box>
-              <Box>
-                <Box textAlign={'left'} my={2} >
-                  <label  >
-                    <b>Name on Card</b> : <Input type='text' placeholder='First Name' border='1px solid gray' />
-                  </label>
-                </Box>
-                <Box textAlign={'left'} my={2} >
-                  <label>
-                    <b>Debil/Credit card number : </b> <Input  type='text' placeholder='Surname' border='1px solid gray' />
-                  </label>
-                </Box>
-                <Box textAlign={'left'} my={2} >
-                  <label>
-                    <b>Security code :</b> <Input type='text' placeholder='Mobile No' border='1px solid gray' />
-                  </label>
-                </Box>
-              </Box>
+        traveler: {
+          firstName,
+          lastName,
+          mobile,
+        },
 
+        item: {
+          ...item,
+          bookingType: undefined,
+        },
 
-              <Box textAlign={'left'} display={'flex'} >
-                <Input type='checkbox'/><Heading ml={2} >Receive text alerts about this trip (free of charge).</Heading>
-              </Box>
+        total: Number(item.price) || 0,
 
-            </Box>
+        status: "confirmed",
 
-            <Box bg={'white'} textAlign={'left'} p={4} >
-              {/* <Image mb={1} width={'100%'} src='https://images.trvl-media.com/lodging/4000000/3450000/3447500/3447485/4c0514cb_l.jpg' />
-              <Heading fontSize={'13px'} >8.8/10 Excellent (820 reviews)</Heading>
-              <Heading fontSize={'13px'}>Guests rated this property 9/10 for cleanliness</Heading>
-              <Heading fontSize={'13px'}>1 Room: Room, 2 Twin Beds, Non Smoking, City View</Heading> */}
-              <Box justifyContent={'space-between'} display={'flex'} >
-                <Box>1 room x 1 night</Box>
-                <Box>$9,500.00</Box>
-              </Box>
+        createdAt: new Date().toISOString(),
+      };
 
-              <Box justifyContent={'space-between'} display={'flex'} >
-                <Box>Taxes</Box>
-                <Box>$1,710.00</Box>
-              </Box>
+      const response = await axios.post(
+        `${API_URL}/bookings`,
+        booking
+      );
 
-              <Box justifyContent={'space-between'} display={'flex'} fontWeight={'bold'} >
-                <Box>Total</Box>
-                <Box>$11,210.00</Box>
-              </Box>
+      const cartEndpoint =
+        bookingType === "hotel"
+          ? "hotelcart"
+          : "flightcart";
 
-              <Box justifyContent={'space-between'} display={'flex'} color='green.600' >
-                <Box>Pay Now</Box>
-                <Box>$0.00</Box>
-              </Box>
+      await axios.delete(
+        `${API_URL}/${cartEndpoint}/${item.id}`
+      );
 
-              <Box justifyContent={'space-between'} display={'flex'} >
-                <Box>Pay at property</Box>
-                <Box>$11,210.00</Box>
-              </Box>
-              <Button mt={4} width={'100%'} height='40px' bg={'#FF9800'}rounded={'7px'} >Complete Booking</Button>
-            </Box>
-          </SimpleGrid>
-        </Box>
+      localStorage.removeItem("checkoutItem");
+
+      setBookingComplete(response.data);
+
+      toast({
+        title: "Booking confirmed!",
+        status: "success",
+        duration: 4000,
+        isClosable: true,
+      });
+    } catch (error) {
+      console.error("Booking error:", error);
+
+      toast({
+        title: "Booking failed",
+        description: "Please try again.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  };
+
+  if (!item && !bookingComplete) {
+    return (
+      <Box width="70%" margin="40px auto">
+        <Heading>No item selected</Heading>
+
+        <Text mt={3}>
+          Please select a hotel or flight from your cart.
+        </Text>
       </Box>
-  )
-}
+    );
+  }
 
-export default CheckoutPage
+  if (bookingComplete) {
+    return (
+      <Box
+        width="60%"
+        margin="50px auto"
+        padding="30px"
+        borderWidth="1px"
+        borderRadius="10px"
+      >
+        <Heading color="green.500">
+          Booking Confirmed
+        </Heading>
+
+        <Text mt={4}>
+          Booking ID: {bookingComplete.id}
+        </Text>
+
+        <Text>
+          Type: {bookingComplete.type}
+        </Text>
+
+        <Text>
+          Status: {bookingComplete.status}
+        </Text>
+
+        <Text fontWeight="bold">
+          Total: ₹
+          {Number(
+            bookingComplete.total
+          ).toLocaleString()}
+        </Text>
+
+        <Button
+          mt={5}
+          colorScheme="blue"
+          onClick={() => {
+            window.location.href = "/";
+          }}
+        >
+          Return Home
+        </Button>
+      </Box>
+    );
+  }
+
+  return (
+    <Box width="70%" margin="30px auto">
+      <Heading>Review and Book</Heading>
+
+      <Box
+        mt={5}
+        padding="20px"
+        borderWidth="1px"
+        borderRadius="10px"
+      >
+        <Heading size="md">
+          {item.bookingType === "hotel"
+            ? item.name
+            : item.airline}
+        </Heading>
+
+        {item.bookingType === "hotel" ? (
+          <>
+            <Text>{item.place}</Text>
+            <Text>Rating: {item.rating}</Text>
+          </>
+        ) : (
+          <>
+            <Text>
+              {item.from} → {item.to}
+            </Text>
+
+            <Text>
+              {item.departure} - {item.arrival}
+            </Text>
+          </>
+        )}
+
+        <Text mt={2} fontWeight="bold">
+          Total: ₹{Number(item.price).toLocaleString()}
+        </Text>
+      </Box>
+
+      <Box
+        mt={5}
+        padding="20px"
+        borderWidth="1px"
+        borderRadius="10px"
+      >
+        <Heading size="md" mb={4}>
+          Traveler Information
+        </Heading>
+
+        <Input
+          mb={3}
+          placeholder="First Name"
+          value={firstName}
+          onChange={(event) =>
+            setFirstName(event.target.value)
+          }
+        />
+
+        <Input
+          mb={3}
+          placeholder="Last Name"
+          value={lastName}
+          onChange={(event) =>
+            setLastName(event.target.value)
+          }
+        />
+
+        <Input
+          mb={3}
+          placeholder="Mobile Number"
+          value={mobile}
+          onChange={(event) =>
+            setMobile(event.target.value)
+          }
+        />
+
+        <Button
+          width="100%"
+          colorScheme="orange"
+          onClick={handleBooking}
+        >
+          Complete Booking
+        </Button>
+      </Box>
+    </Box>
+  );
+};
+
+export default CheckoutPage;
