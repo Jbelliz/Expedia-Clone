@@ -2,7 +2,6 @@
 import { useState } from "react";
 import React from "react";
 import { Button,} from "@chakra-ui/react";
-import {Link} from "react-router-dom";
 import "./homePage.css";
 import styles from "../Stay/Stay.module.css";
 // import SideBar from "./SideBar";
@@ -15,22 +14,39 @@ const initialState = {
   returnDate: "",
 };
 
-export default function Flights() {
+export default function Flights({ onSearch }) {
   const [PassengerData, setPassengerData] = useState(initialState);
   const handleChange = (e) => {
     setPassengerData({ ...PassengerData, [e.target.name]: e.target.value });
   };
 
   const handleClick = () => {
-    console.log(PassengerData);
-    setPassengerData(initialState);
-  };
-const swapValuehandler = () => {
-    setPassengerData({
-      ...PassengerData,
-      from: PassengerData.to,
-      to: PassengerData.from,
+    if (
+      !PassengerData.from ||
+      !PassengerData.to ||
+      PassengerData.from === "From" ||
+      PassengerData.to === "To"
+    ) {
+      alert("Please select both a departure city and destination.");
+      return;
+    }
+
+    if (PassengerData.from === PassengerData.to) {
+      alert("Departure and destination cannot be the same.");
+      return;
+    }
+
+    onSearch({
+      from: PassengerData.from,
+      to: PassengerData.to,
     });
+  };
+  const swapValuehandler = () => {
+     setPassengerData({
+        ...PassengerData,
+        from: PassengerData.to,
+        to: PassengerData.from,
+      });
   };
 
   return (
@@ -125,13 +141,11 @@ const swapValuehandler = () => {
             colorScheme="blue"
             size="lg"
             className={styles["SearchBtn1"]}
-            style={{margin:"auto",}}
+            style={{ margin: "auto" }}
             onClick={handleClick}
-            
           >
-            <Link to={{ pathname: '/flight' }}>Search</Link>
-          
-          </Button >
+            Search
+          </Button>
             {/* <button >Search</button> */}
           </div>
         </div>

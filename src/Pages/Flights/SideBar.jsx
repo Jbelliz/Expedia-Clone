@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Flex,
   Button,
@@ -10,10 +10,14 @@ import {
   Radio,
 } from "@chakra-ui/react";
 import FlightList from "./FlightList";
-import { useState } from "react";
 
-const SideBar = () => {
-  const [priceValue, setPriceValue] = useState(8);
+const SideBar = ({ searchCriteria }) => {
+  const [priceValue, setPriceValue] = useState("all");
+  const [totalPages, setTotalPages] = useState(1);
+
+    useEffect(() => {
+      setPage(1);
+    }, [priceValue, searchCriteria]);
   const [classes, setClasses] = useState("");
   const [page, setPage] = useState(1);
   const [Packaging, setpackaging] = useState("");
@@ -53,14 +57,34 @@ const SideBar = () => {
             <Heading as="h5" size="sm" m="3">
               Price Per Trip
             </Heading>
-            <RadioGroup onChange={setPriceValue} value={priceValue}>
-              <Stack direction="column">
-                <Radio value="5">₹ 4000 - ₹ 5000</Radio>
-                <Radio value="6">₹ 5000 - ₹ 6000</Radio>
-                <Radio value="7">₹ 6000 - ₹ 7000</Radio>
-                <Radio value="8">₹ 7000 - ₹ 8000</Radio>
-              </Stack>
-            </RadioGroup>
+<RadioGroup
+  onChange={setPriceValue}
+  value={priceValue}
+>
+  <Stack direction="column">
+    <Radio value="all">All Prices</Radio>
+
+    <Radio value="5">
+      ₹ 4,000 - ₹ 5,000
+    </Radio>
+
+    <Radio value="6">
+      ₹ 5,000 - ₹ 6,000
+    </Radio>
+
+    <Radio value="7">
+      ₹ 6,000 - ₹ 7,000
+    </Radio>
+
+    <Radio value="8">
+      ₹ 7,000 - ₹ 8,000
+    </Radio>
+
+    <Radio value="9">
+      ₹ 8,000 - ₹ 9,000
+    </Radio>
+  </Stack>
+</RadioGroup>
           </Box>
 
           <Box>
@@ -116,18 +140,23 @@ const SideBar = () => {
             <Button style={pageBtn}>
               {page}
             </Button>
-            <Button
-              style={pageBtn}
-              isDisabled={page === 4}
-              onClick={() => setPage(page + 1)}
-              >
-              Next
-            </Button>
+<Button
+  style={pageBtn}
+  isDisabled={page >= totalPages}
+  onClick={() => setPage(page + 1)}
+>
+  Next
+</Button>
           {/* </Flex> */}
               </Stack>
           {/* Pagination Part UI End */}
 
-          <FlightList page={page} priceValue={priceValue} />
+<FlightList
+  page={page}
+  priceValue={priceValue}
+  searchCriteria={searchCriteria}
+  onTotalPages={setTotalPages}
+/>
         </Box>
       </Box>
   );
