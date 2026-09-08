@@ -38,6 +38,29 @@
 - Cart Section
 - Admin Panel
 
+<h2>Project Structure</h2>
+
+```
+src/
+  assets/          Static app assets
+  components/      Shared reusable UI
+    forms/
+    home/
+    layout/
+  config/          App configuration, including Firebase
+  features/        Route-level screens grouped by feature
+    admin/
+    auth/
+    bookings/
+    flights/
+    home/
+    stay/
+    things-todo/
+  routes/          React Router route definitions
+  services/        Shared API constants and service setup
+  store/           Redux store, actions, reducers, and action types
+```
+
 <h2>Installation</h2>
 
 To run this project locally, follow the steps below:

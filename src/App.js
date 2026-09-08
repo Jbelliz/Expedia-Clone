@@ -1,7 +1,7 @@
 import "./App.css";
-import Navbar from "./Components/Navbar";
-import Footer from "./Components/Footer";
-import { AllRoutes } from "./Pages/AllRoutes";
+import Navbar from "./components/layout/Navbar";
+import Footer from "./components/layout/Footer";
+import { AllRoutes } from "./routes/AllRoutes";
 import { useState } from "react";
 
 
