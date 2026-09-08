@@ -15,7 +15,7 @@ const StayData = () => {
   console.log("city",selectedCity);
   console.log("In", checkInDate);
   console.log("out", checkOutDate);
-  const [selectedPriceRange, setSelectedPriceRange] = useState([0, 10000]);
+  const [selectedPriceRange, setSelectedPriceRange] = useState([0, 50000]);
   const [filteredHotel, setFilteredHotel] = useState([]);
   const [price, setPrice] = useState(""); // Define price state variable
 
@@ -36,25 +36,47 @@ const StayData = () => {
   //   dispatch(fetchingHotels("","",""));
   // }, [dispatch]);
 
+  // useEffect(() => {
+  //   if (data) {
+  //     setFilteredHotel(
+  //       data.filter(
+  //         (hotel) =>
+  //           hotel.price >= selectedPriceRange[0] &&
+  //           hotel.price <= selectedPriceRange[1]
+  //       )
+  //     );
+  //     console.log(filteredHotel);
+  //   }
+  // }, [data, selectedPriceRange]);
   useEffect(() => {
     if (data) {
-      setFilteredHotel(
-        data.filter(
-          (hotel) =>
-            hotel.price >= selectedPriceRange[0] &&
-            hotel.price <= selectedPriceRange[1]
-        )
-      );
-      console.log(filteredHotel);
+      const filtered = data.filter((hotel) => {
+       const hotelPrice = Number(hotel.price) || 0;
+
+        const matchesPrice =
+          hotelPrice >= selectedPriceRange[0] &&
+         hotelPrice <= selectedPriceRange[1];
+
+       const matchesCity =
+          !selectedCity ||
+         hotel.place?.toLowerCase() === selectedCity.toLowerCase();
+
+       return matchesPrice && matchesCity;
+      });
+
+    setFilteredHotel(filtered);
     }
-  }, [data, selectedPriceRange]);
+  }, [data, selectedPriceRange, selectedCity]);
 
 console.log(data)
   return (
     <div className="stay-data">
       
       <div className="sidebar-container">
-        <Sidebar/>
+        <Sidebar
+        selectedPriceRange={selectedPriceRange}
+        setSelectedPriceRange={setSelectedPriceRange}
+        />
       </div>
 
       {filteredHotel?.map((hotel) => (
@@ -71,7 +93,7 @@ console.log(data)
                 We have 5 left
               </button>
             </div>
-            <p className="stay-location">{hotel.location}</p>
+            <p className="stay-location">{hotel.place}</p>
             <p className="stay-description">{hotel.description}</p>
             <div className="stay-details">
               <div className="stay-price">

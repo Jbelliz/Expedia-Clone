@@ -1,24 +1,20 @@
 const data = [
-    {
-        id: 0,
-        name: 'Kolkota'
-      },
-      {
-        id: 1,
-        name: 'Mumbai'
-      },
-      {
-        id: 2,
-        name: 'Pune'
-      },
-      {
-        id: 3,
-        name: 'Haidrabad'
-      },
-      {
-        id: 4,
-        name: 'Bhubaneswar'
-      }
-]
+  {
+    id: 0,
+    name: "Koramangala",
+  },
+  {
+    id: 1,
+    name: "Mahipalpur",
+  },
+  {
+    id: 2,
+    name: "Paharganj",
+  },
+  {
+    id: 3,
+    name: "Benaulim",
+  },
+];
 
 export default data;

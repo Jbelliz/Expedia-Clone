@@ -4,7 +4,10 @@ import { fetchingHotels } from "../../Redux/StayReducer/action";
 import { useDispatch } from "react-redux";
 import PriceSlider from "./PriceSlider";
 
-export const Sidebar = () => {
+export const Sidebar = ({
+  selectedPriceRange,
+  setSelectedPriceRange,
+}) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [order,setOrder] = React.useState("asc");
   const [sort,setSort] = React.useState("");
@@ -31,7 +34,7 @@ const handlePriceChange = (e) => {
     order && (params["_order"] = order);
     setSearchParams(params);
 
-    dispatch(fetchingHotels(sort, order,));
+    dispatch(fetchingHotels(sort, order, 1));
   }, [sort, order]);
 
   return (
@@ -78,7 +81,10 @@ const handlePriceChange = (e) => {
       <br/>
       <br/>
       <div>
-        <PriceSlider />
+        <PriceSlider
+          values={selectedPriceRange}
+          onChange={setSelectedPriceRange}
+        />
       </div>
     </div>
   );

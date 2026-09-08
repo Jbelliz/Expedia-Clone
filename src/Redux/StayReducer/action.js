@@ -1,4 +1,5 @@
 import axios from "axios";
+import API_URL from "../../api";
 import {
   SELECTED_DATE_AND_CITY,
   SELECTED_CITY,
@@ -48,7 +49,8 @@ export const addHotel = (payload) => (dispatch) => {
   dispatch(hotelRequest());
 
   axios
-    .post("https://happy-sunglasses-eel.cyclic.app/hotel", payload) 
+    // .post("https://happy-sunglasses-eel.cyclic.app/hotel", payload)
+    .post(`${API_URL}/hotel`, payload) 
     .then(() => {
       dispatch(postHotelSuccess());
     })
@@ -58,21 +60,49 @@ export const addHotel = (payload) => (dispatch) => {
 };
 
 //https://happy-sunglasses-eel.cyclic.app/hotel?_sort=asc&_order=price&page=1&_limit=20
-export const fetchingHotels = (sort, order, page) => async (dispatch) => {
-  console.log(order, sort,page);
+// export const fetchingHotels = (sort, order, page) => async (dispatch) => {
+//   console.log(order, sort,page);
+//   dispatch({ type: HOTEL_REQUEST });
+//   try {
+//     const res = await axios.get(
+//       `https://happy-sunglasses-eel.cyclic.app/hotel?_sort=${sort}&_order=${order}&_page=${page}&_limit=20`
+//     );
+//     console.log(res.data);
+//     dispatch({ type: GET_HOTEL_SUCCESS, payload: res.data });
+//   } catch (err) {
+//     dispatch({ type: HOTEL_FAILURE });
+//     console.log(err);
+//   }
+// };
+export const fetchingHotels = (
+  sort,
+  order,
+  page = 1
+) => async (dispatch) => {
+
   dispatch({ type: HOTEL_REQUEST });
+
   try {
-    const res = await axios.get(
-      `https://happy-sunglasses-eel.cyclic.app/hotel?_sort=${sort}&_order=${order}&_page=${page}&_limit=20`
-    );
-    console.log(res.data);
-    dispatch({ type: GET_HOTEL_SUCCESS, payload: res.data });
+    let url = `${API_URL}/hotel?_page=${page}&_limit=20`;
+
+    if (sort) {
+      url += `&_sort=${sort}&_order=${order}`;
+    }
+
+    const res = await axios.get(url);
+
+    dispatch({
+      type: GET_HOTEL_SUCCESS,
+      payload: res.data,
+    });
+
   } catch (err) {
+
     dispatch({ type: HOTEL_FAILURE });
-    console.log(err);
+
+    console.error("Hotel fetch error:", err);
   }
 };
-
 
 
 
@@ -82,7 +112,8 @@ export const fetchingHotels = (sort, order, page) => async (dispatch) => {
 export const DeleteHotel = (deleteId) => async (dispatch) => {
   try {
     const res = await fetch(
-      `https://happy-sunglasses-eel.cyclic.app/hotel/${deleteId}`, 
+      // `https://happy-sunglasses-eel.cyclic.app/hotel/${deleteId}`
+      `${API_URL}/hotel/${deleteId}`, 
       {
         method: "DELETE",
         headers: {
